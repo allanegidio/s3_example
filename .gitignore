@@ -35,3 +35,6 @@ s3_example-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# local stack volume folder
+/volume/
+
