@@ -6,6 +6,7 @@ defmodule S3Example.Images.Image do
     field :description, :string
     field :name, :string
     field :path, :string
+    field :file, :binary, virtual: true
 
     timestamps()
   end
