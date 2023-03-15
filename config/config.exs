@@ -56,6 +56,21 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :ex_aws,
+  json_codec: Jason,
+  access_key_id: [{:system, "AWS_ACCESS_KEY_ID"}, {:awscli, "default", 30}, :instance_role],
+  secret_access_key: [{:system, "AWS_SECRET_ACCESS_KEY"}, {:awscli, "default", 30}, :instance_role]
+
+config :ex_aws, :s3,
+  scheme: "http://",
+  host: "localhost",
+  port: 4566
+
+config :waffle,
+  storage: Waffle.Storage.S3,
+  bucket: "s3-example",                # or {:system, "AWS_S3_BUCKET"}
+  asset_host: "http://static.example.com" # or {:system, "ASSET_HOST"}
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 

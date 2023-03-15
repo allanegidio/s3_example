@@ -7,6 +7,7 @@ defmodule S3Example.Images do
   alias S3Example.Repo
 
   alias S3Example.Images.Image
+  alias S3Example.Images.ImageStore
 
   @doc """
   Returns the list of images.
@@ -49,10 +50,16 @@ defmodule S3Example.Images do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_image(attrs \\ %{}) do
-    %Image{}
-    |> Image.changeset(attrs)
-    |> Repo.insert()
+  def create_image(%{"file" => file} = attrs \\ %{}) do
+    case ImageStore.store(file) do
+      {:ok, _result} ->
+        %Image{}
+        |> Image.changeset(attrs)
+        |> Repo.insert()
+
+      {:error, reason} ->
+        {:error, reason}
+    end
   end
 
   @doc """
